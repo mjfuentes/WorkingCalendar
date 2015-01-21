@@ -4,7 +4,7 @@ package com.rockapps.mfuentes.workingcalendar.wizard;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +22,8 @@ import java.security.InvalidParameterException;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_enter_period extends Fragment  {
-
+public class Fragment_enter_period extends Fragment {
+    static final String PERIOD_FRAGMENT = "period";
     static final String WORK_DAYS = "work_days";
     static final String REST_DAYS = "rest_days";
     private WizardActivity mListener;
@@ -48,15 +48,15 @@ public class Fragment_enter_period extends Fragment  {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
-                SharedPreferences.Editor editor = settings.edit();
                 try {
                     int workDays = (Integer.valueOf(((EditText) view.findViewById(R.id.workdays_enter)).getText().toString()));
                     int restDays = (Integer.valueOf(((EditText) view.findViewById(R.id.restdays_enter)).getText().toString()));
                     if (workDays != 0 && restDays != 0) {
-                        editor.putInt("workDays", workDays);
-                        editor.putInt("restDays", restDays);
-                        mListener.next();
+                        SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putInt(WORK_DAYS, workDays);
+                        editor.putInt(REST_DAYS, restDays);
+                        mListener.next(PERIOD_FRAGMENT);
                     }
                     else {
                         throw new InvalidParameterException("Datos erroneos");
@@ -72,7 +72,7 @@ public class Fragment_enter_period extends Fragment  {
         last.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.last();
+                mListener.last(PERIOD_FRAGMENT);
             }
         });
         return view;

@@ -1,9 +1,9 @@
 package com.rockapps.mfuentes.workingcalendar.wizard;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +17,18 @@ import com.rockapps.mfuentes.workingcalendar.WizardActivity;
 
 import java.security.InvalidParameterException;
 
-public class Fragment_welcome extends Fragment {
-    private static final String WELCOME_FRAGMENT = "welcome";
+public class Fragment_done extends Fragment {
+    private static final String DONE_FRAGMENT = "done";
     private WizardActivity mListener;
 
-    public static Fragment_welcome newInstance() {
-        Fragment_welcome fragment = new Fragment_welcome();
+    public static Fragment_done newInstance() {
+        Fragment_done fragment = new Fragment_done();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public Fragment_welcome() {
+    public Fragment_done() {
     }
 
     @Override
@@ -44,21 +44,14 @@ public class Fragment_welcome extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
-                SharedPreferences.Editor editor = settings.edit();
-                try {
-                    String username = (((EditText) view.findViewById(R.id.username_enter)).getText().toString());
-                    if (!username.equals(null) && !username.equals("")){
-                        editor.putString("username", username);
-                        mListener.next(WELCOME_FRAGMENT);
-                    }
-                    else {
-                        throw new InvalidParameterException("Nombre invalido");
-                    }
-                }
-                catch (Exception e){
-                    Toast.makeText(getActivity(), "Por favor ingrese su nombre antes de continuar.", Toast.LENGTH_LONG);
-                }
+                mListener.next(DONE_FRAGMENT);
+            }
+        });
+        Button last = (Button) view.findViewById(R.id.last_button);
+        last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.last(DONE_FRAGMENT);
             }
         });
         return view;

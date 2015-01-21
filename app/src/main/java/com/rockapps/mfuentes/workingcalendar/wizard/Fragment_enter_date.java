@@ -2,7 +2,7 @@ package com.rockapps.mfuentes.workingcalendar.wizard;
 
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,14 +24,14 @@ import java.security.InvalidParameterException;
  * A simple {@link android.app.Fragment} subclass.
  */
 public class Fragment_enter_date extends Fragment  {
-
+    private static String DATE_FRAGMENT = "date";
     private static String START_DATE = "start_date";
     private WizardActivity mListener;
     final static String USERNAME = "username";
     public Fragment_enter_date() {
     }
 
-    public static Fragment_enter_date newInstance(String username) {
+    public static Fragment_enter_date newInstance() {
         Fragment_enter_date fragment = new Fragment_enter_date();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -48,14 +48,14 @@ public class Fragment_enter_date extends Fragment  {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
-                SharedPreferences.Editor editor = settings.edit();
                 try {
                     DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
                     String date = datePicker.getDayOfMonth() + "-" + datePicker.getMonth() + "-" + datePicker.getYear();
                     if (date != "") {
+                        SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
+                        SharedPreferences.Editor editor = settings.edit();
                         editor.putString(START_DATE, date);
-                        mListener.next();
+                        mListener.next(DATE_FRAGMENT);
                     }
                     else {
                         throw new InvalidParameterException("Datos erroneos");
@@ -71,7 +71,7 @@ public class Fragment_enter_date extends Fragment  {
         last.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.last();
+                mListener.last(DATE_FRAGMENT);
             }
         });
         return view;

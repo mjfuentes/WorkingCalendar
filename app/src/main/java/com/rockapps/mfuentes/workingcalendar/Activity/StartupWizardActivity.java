@@ -1,5 +1,6 @@
 package com.rockapps.mfuentes.workingcalendar.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,8 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rockapps.mfuentes.workingcalendar.R;
+import com.rockapps.mfuentes.workingcalendar.WizardActivity;
+import com.rockapps.mfuentes.workingcalendar.wizard.Fragment_done;
+import com.rockapps.mfuentes.workingcalendar.wizard.Fragment_enter_date;
+import com.rockapps.mfuentes.workingcalendar.wizard.Fragment_enter_period;
+import com.rockapps.mfuentes.workingcalendar.wizard.Fragment_welcome;
 
-public class StartupWizardActivity extends ActionBarActivity {
+public class StartupWizardActivity extends ActionBarActivity implements WizardActivity{
+    private static final String DATE_FRAGMENT = "date";
+    private static final String DONE_FRAGMENT = "done";
+    private static final String PERIOD_FRAGMENT = "period";
+    private static final String WELCOME_FRAGMENT = "welcome";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +29,7 @@ public class StartupWizardActivity extends ActionBarActivity {
         setContentView(R.layout.activity_startup_wizard);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, Fragment_welcome.newInstance())
                     .commit();
         }
     }
@@ -27,7 +37,6 @@ public class StartupWizardActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_startup_wizard, menu);
         return true;
     }
@@ -45,6 +54,49 @@ public class StartupWizardActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void next(String fragment) {
+        Fragment newFragment = null;
+        switch (fragment) {
+            case WELCOME_FRAGMENT:
+                newFragment = Fragment_enter_period.newInstance();
+                break;
+            case PERIOD_FRAGMENT:
+                newFragment = Fragment_enter_date.newInstance();
+                break;
+            case DATE_FRAGMENT:
+                newFragment = Fragment_done.newInstance();
+                break;
+            case DONE_FRAGMENT:
+                Intent intent = new Intent(StartupWizardActivity.this,MainActivity.class);
+                startActivity(intent);
+                break;
+            }
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, newFragment)
+                .commit();
+    }
+
+    @Override
+    public void last(String fragment) {
+        Fragment newFragment = null;
+        switch (fragment) {
+            case PERIOD_FRAGMENT:
+                newFragment = Fragment_welcome.newInstance();
+                break;
+            case DATE_FRAGMENT:
+                newFragment = Fragment_enter_period.newInstance();
+                break;
+            case DONE_FRAGMENT:
+                newFragment = Fragment_enter_date.newInstance();
+                break;
+        }
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, newFragment)
+                .commit();
     }
 
     /**
