@@ -10,23 +10,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Perfecto Pepito!"
+        android:text="Todo listo, crack!"
         android:id="@+id/excelent_text"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp" />
+        android:layout_marginTop="120dp"
+        android:textStyle="bold"
+        android:textSize="40dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ya estas listo!"
         android:id="@+id/now_enter_text"
         android:layout_below="@+id/excelent_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:textSize="20dp"
+        android:text="Si en algun momento queres modificar algo podes hacerlo desde las opciones!"
+        android:gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
@@ -37,7 +41,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:textStyle="bold"
+        android:textSize="20dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -49,7 +55,9 @@
         android:layout_alignParentStart="true"
         android:layout_margin="20dp"
         android:layout_alignParentEnd="false"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:textSize="20dp" />
 
 
 </RelativeLayout>

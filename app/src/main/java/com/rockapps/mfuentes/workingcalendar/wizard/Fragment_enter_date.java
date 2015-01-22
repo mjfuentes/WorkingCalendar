@@ -19,6 +19,7 @@ import com.rockapps.mfuentes.workingcalendar.R;
 import com.rockapps.mfuentes.workingcalendar.WizardActivity;
 
 import java.security.InvalidParameterException;
+import java.util.Calendar;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
@@ -41,9 +42,13 @@ public class Fragment_enter_date extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final RelativeLayout view = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.fragment_enter_date, container);
+        final RelativeLayout view = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.fragment_enter_date, container,false);
         TextView textView = (TextView) view.findViewById(R.id.excelent_text);
-        textView.setText("Excelente, " + getArguments().getString(USERNAME,"che") + "!");
+        SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
+        String name = settings.getString(USERNAME,"");
+        if (!name.equals("")) {
+            textView.setText("Genial, " + name + "!");
+        }
         Button next = (Button) view.findViewById(R.id.next_button);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +60,7 @@ public class Fragment_enter_date extends Fragment  {
                         SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString(START_DATE, date);
+                        editor.commit();
                         mListener.next(DATE_FRAGMENT);
                     }
                     else {

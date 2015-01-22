@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,21 +42,26 @@ public class Fragment_enter_period extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final RelativeLayout view = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.fragment_enter_date, container);
+        final RelativeLayout view = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.fragment_enter_period, container,false);
         TextView textView = (TextView) view.findViewById(R.id.excelent_text);
-        textView.setText("Hola " + getArguments().getString(USERNAME,"") + ", mucho gusto!");
+        SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
+        String name = settings.getString(USERNAME,"");
+        if (!name.equals("")) {
+            textView.setText("Hola, " + name + "!");
+        }
         Button next = (Button) view.findViewById(R.id.next_button);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    int workDays = (Integer.valueOf(((EditText) view.findViewById(R.id.workdays_enter)).getText().toString()));
-                    int restDays = (Integer.valueOf(((EditText) view.findViewById(R.id.restdays_enter)).getText().toString()));
-                    if (workDays != 0 && restDays != 0) {
+                    int workDaysCant = Integer.valueOf(((TextView) view.findViewById(R.id.work_days)).getText().toString());
+                    int restDaysCant = Integer.valueOf(((TextView) view.findViewById(R.id.rest_days)).getText().toString());
+                    if (workDaysCant != 0 && restDaysCant != 0) {
                         SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
                         SharedPreferences.Editor editor = settings.edit();
-                        editor.putInt(WORK_DAYS, workDays);
-                        editor.putInt(REST_DAYS, restDays);
+                        editor.putInt(WORK_DAYS, workDaysCant);
+                        editor.putInt(REST_DAYS, restDaysCant);
+                        editor.commit();
                         mListener.next(PERIOD_FRAGMENT);
                     }
                     else {

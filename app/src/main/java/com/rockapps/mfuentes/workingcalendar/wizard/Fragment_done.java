@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rockapps.mfuentes.workingcalendar.R;
@@ -19,6 +20,7 @@ import java.security.InvalidParameterException;
 
 public class Fragment_done extends Fragment {
     private static final String DONE_FRAGMENT = "done";
+    final private static String USERNAME = "username";
     private WizardActivity mListener;
 
     public static Fragment_done newInstance() {
@@ -39,7 +41,13 @@ public class Fragment_done extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final RelativeLayout view = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.fragment_welcome, container);
+        final RelativeLayout view = (RelativeLayout) getActivity().getLayoutInflater().inflate(R.layout.fragment_end_wizard, container,false);
+        SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
+//        String name = settings.getString(USERNAME,"");
+//        TextView excelente = (TextView) view.findViewById(R.id.excelent_text);
+//        if (!name.equals("")) {
+//            excelente.setText("Excelente " + name + "!");
+//        }
         Button next = (Button) view.findViewById(R.id.next_button);
         next.setOnClickListener(new View.OnClickListener() {
             @Override

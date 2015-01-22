@@ -10,22 +10,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Excelente Pepito!"
+        android:text="De 10 campeon!"
         android:id="@+id/excelent_text"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp" />
+        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:textSize="40dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ahora ingresa:"
+        android:text="Una cosa mas:"
         android:id="@+id/now_enter_text"
         android:gravity="center"
         android:layout_below="@+id/excelent_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="0dp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +39,9 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/now_enter_text"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:textSize="25dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -47,7 +52,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:textStyle="bold"
+        android:textSize="20dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -58,16 +65,30 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:textStyle="bold"
+        android:textSize="20dp" />
 
     <DatePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/date_picker"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
         android:layout_below="@+id/workdays_start_text"
-        android:layout_alignRight="@+id/excelent_text"
-        android:layout_alignEnd="@+id/excelent_text"
-        android:layout_marginTop="29dp" />
+        android:layout_alignLeft="@+id/date_picker"
+        android:layout_alignStart="@+id/date_picker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <!--<DatePicker-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/date_picker"-->
+        <!--android:layout_below="@+id/workdays_start_text"-->
+        <!--android:layout_alignRight="@+id/excelent_text"-->
+        <!--android:layout_alignEnd="@+id/excelent_text"-->
+        <!--android:layout_marginTop="5dp" />-->
 
 
 </RelativeLayout>

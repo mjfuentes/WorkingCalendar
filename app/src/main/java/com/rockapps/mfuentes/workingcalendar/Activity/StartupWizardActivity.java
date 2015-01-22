@@ -1,6 +1,8 @@
 package com.rockapps.mfuentes.workingcalendar.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.rockapps.mfuentes.workingcalendar.R;
 import com.rockapps.mfuentes.workingcalendar.WizardActivity;
@@ -17,7 +20,7 @@ import com.rockapps.mfuentes.workingcalendar.wizard.Fragment_enter_date;
 import com.rockapps.mfuentes.workingcalendar.wizard.Fragment_enter_period;
 import com.rockapps.mfuentes.workingcalendar.wizard.Fragment_welcome;
 
-public class StartupWizardActivity extends ActionBarActivity implements WizardActivity{
+public class StartupWizardActivity extends FragmentActivity implements WizardActivity{
     private static final String DATE_FRAGMENT = "date";
     private static final String DONE_FRAGMENT = "done";
     private static final String PERIOD_FRAGMENT = "period";
@@ -75,8 +78,9 @@ public class StartupWizardActivity extends ActionBarActivity implements WizardAc
                 startActivity(intent);
                 break;
             }
+
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, newFragment)
+                .replace(R.id.container, newFragment).addToBackStack(null)
                 .commit();
     }
 
@@ -95,7 +99,7 @@ public class StartupWizardActivity extends ActionBarActivity implements WizardAc
                 break;
         }
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, newFragment)
+                .replace(R.id.container, newFragment).addToBackStack(null)
                 .commit();
     }
 
