@@ -78,10 +78,11 @@ public class StartupWizardActivity extends FragmentActivity implements WizardAct
                 startActivity(intent);
                 break;
             }
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, newFragment).addToBackStack(null)
-                .commit();
+        if (newFragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, newFragment).addToBackStack(null)
+                    .commit();
+        }
     }
 
     @Override

@@ -55,7 +55,7 @@ public class Fragment_enter_date extends Fragment  {
             public void onClick(View v) {
                 try {
                     DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
-                    String date = datePicker.getDayOfMonth() + "-" + datePicker.getMonth() + "-" + datePicker.getYear();
+                    String date = datePicker.getDayOfMonth() + "-" + datePicker.getMonth()+1 + "-" + datePicker.getYear();
                     if (date != "") {
                         SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
                         SharedPreferences.Editor editor = settings.edit();
