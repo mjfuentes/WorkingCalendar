@@ -4,38 +4,45 @@
 	android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="@drawable/bg">
+	android:background="@drawable/bg2">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/welcome_text"
+        android:layout_gravity="center_horizontal"
+        android:textSize="35dp"
+        android:layout_marginTop="20dp" />
 
     <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:orientation="horizontal"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
-		<ImageView
+        <ImageView
 			android:id="@+id/prevMonth"
 			android:src="@drawable/calendar_left_arrow_selector"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-            android:layout_marginTop="80dp">
+			android:layout_height="wrap_content">
 		</ImageView>
 		<Button
 			android:id="@+id/currentMonth"
 			android:layout_weight="0.6"
 			android:textColor="#FFFFFF"
 			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:background="@drawable/calendar_bar"
+			android:background="@drawable/calendar_bar3"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-            android:layout_marginTop="80dp">
+			android:layout_height="wrap_content">
 		</Button>
 		<ImageView
 			android:id="@+id/nextMonth"
 			android:src="@drawable/calendar_right_arrow_selector"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-            android:layout_marginTop="80dp">
+			android:layout_height="wrap_content">
 		</ImageView>
 	</LinearLayout>
 
@@ -45,10 +52,11 @@
 		android:layout_height="wrap_content">
 		<ImageView
 			android:id="@+id/calendarheader"
-			android:src="@drawable/blue_bg_with_text"
+			android:src="@drawable/dias"
 			android:layout_gravity="center"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+            android:scaleType="fitXY">
 		</ImageView>
 	</LinearLayout>
 

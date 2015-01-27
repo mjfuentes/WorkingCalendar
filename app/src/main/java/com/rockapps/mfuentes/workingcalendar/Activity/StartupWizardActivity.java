@@ -2,6 +2,7 @@ package com.rockapps.mfuentes.workingcalendar.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -25,16 +26,27 @@ public class StartupWizardActivity extends FragmentActivity implements WizardAct
     private static final String DONE_FRAGMENT = "done";
     private static final String PERIOD_FRAGMENT = "period";
     private static final String WELCOME_FRAGMENT = "welcome";
+    private static final String FIRST_TIME = "first_time";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_startup_wizard);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, Fragment_welcome.newInstance())
-                    .commit();
+        SharedPreferences settings = getSharedPreferences("PREFS", 0);
+        Boolean first_time = settings.getBoolean(FIRST_TIME,true);
+        if (first_time) {
+            setContentView(R.layout.activity_startup_wizard);
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, Fragment_welcome.newInstance())
+                        .commit();
+            }
         }
+        else {
+            Intent intent = new Intent(StartupWizardActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
 
@@ -75,7 +87,10 @@ public class StartupWizardActivity extends FragmentActivity implements WizardAct
                 break;
             case DONE_FRAGMENT:
                 Intent intent = new Intent(StartupWizardActivity.this,MainActivity.class);
+                intent.putExtra("FIRST_TIME",true);
                 startActivity(intent);
+                this.save_state();
+                finish();
                 break;
             }
         if (newFragment != null) {
@@ -118,5 +133,12 @@ public class StartupWizardActivity extends FragmentActivity implements WizardAct
             View rootView = inflater.inflate(R.layout.fragment_welcome, container, false);
             return rootView;
         }
+    }
+
+    private void save_state(){
+        SharedPreferences settings = getSharedPreferences("PREFS", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(FIRST_TIME, false);
+        editor.commit();
     }
 }

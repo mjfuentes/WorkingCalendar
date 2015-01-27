@@ -7,5 +7,5 @@
 		android:state_focused="true"
 		android:drawable="@drawable/cal_left_arrow_on" /> <!-- focused -->
 	<item
-		android:drawable="@drawable/cal_left_arrow_off" /> <!-- default -->
+		android:drawable="@drawable/cal_left_arrow_off2" /> <!-- default -->
 </selector>
