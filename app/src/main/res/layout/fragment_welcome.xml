@@ -5,7 +5,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.rockapps.mfuentes.workingcalendar.Activity.StartupWizardActivity$PlaceholderFragment"
-    style="@android:style/Theme.Holo">
+    style="@android:style/Theme.Holo"
+    android:background="#ff85c0ff">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,11 +14,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Hola, soy Petroca!"
         android:id="@+id/excelent_text"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
         android:textStyle="bold"
-        android:textSize="40dp" />
+        android:textSize="40dp"
+        android:layout_below="@+id/petroca_welcome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,11 +26,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Como te llamas?"
         android:id="@+id/now_enter_text"
+        android:textStyle="bold"
+        android:textSize="30dp"
         android:layout_below="@+id/excelent_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
-        android:textStyle="bold"
-        android:textSize="30dp" />
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -54,6 +55,17 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:textStyle="bold"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:background="#ff4dabff"
+        android:padding="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/petroca_welcome"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/happy6"
+        android:layout_marginTop="70dp" />
 
 </RelativeLayout>

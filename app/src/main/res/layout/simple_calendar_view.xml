@@ -1,48 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="@drawable/bg2">
+    android:background="#ff85c0ff"
+    tools:context=".Activity.MainActivity">
 
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/welcome_text"
-        android:layout_gravity="center_horizontal"
-        android:textSize="35dp"
-        android:layout_marginTop="20dp" />
+        android:gravity="center"
+        android:layout_marginTop="45dp">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/funny"
+            android:maxWidth="20dp"
+            android:layout_marginLeft="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/welcome_text"
+            android:textSize="40dp"
+            android:text="Bienvenido!"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"></FrameLayout>
 
     <LinearLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:orientation="horizontal"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="25dp">
 
         <ImageView
 			android:id="@+id/prevMonth"
 			android:src="@drawable/calendar_left_arrow_selector"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
+			android:layout_height="50dp">
 		</ImageView>
 		<Button
 			android:id="@+id/currentMonth"
 			android:layout_weight="0.6"
-			android:textColor="#FFFFFF"
+			android:textColor="#ff192967"
 			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:background="@drawable/calendar_bar3"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Diciembre 2014"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:background="#ff85c0ff"
+            android:layout_gravity="center_vertical">
 		</Button>
 		<ImageView
 			android:id="@+id/nextMonth"
 			android:src="@drawable/calendar_right_arrow_selector"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
+			android:layout_height="50dp"
+            android:layout_gravity="center_vertical">
 		</ImageView>
 	</LinearLayout>
 
@@ -56,7 +87,10 @@
 			android:layout_gravity="center"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-            android:scaleType="fitXY">
+            android:scaleType="fitXY"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp">
 		</ImageView>
 	</LinearLayout>
 
@@ -66,7 +100,8 @@
 		android:numColumns="7"
 		android:layout_width="fill_parent"
 		android:layout_height="match_parent"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="30dp"
+        android:columnWidth="7dp">
 	</GridView>
 
 </LinearLayout>

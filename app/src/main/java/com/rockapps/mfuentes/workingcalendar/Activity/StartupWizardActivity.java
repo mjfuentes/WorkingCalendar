@@ -33,7 +33,8 @@ public class StartupWizardActivity extends FragmentActivity implements WizardAct
         super.onCreate(savedInstanceState);
         SharedPreferences settings = getSharedPreferences("PREFS", 0);
         Boolean first_time = settings.getBoolean(FIRST_TIME,true);
-        if (first_time) {
+        Boolean reconfigure = getIntent().getBooleanExtra("RECONFIGURE",false);
+        if (first_time || reconfigure) {
             setContentView(R.layout.activity_startup_wizard);
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()

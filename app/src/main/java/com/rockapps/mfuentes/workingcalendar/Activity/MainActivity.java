@@ -1,16 +1,17 @@
 package com.rockapps.mfuentes.workingcalendar.Activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rockapps.mfuentes.workingcalendar.R;
+import com.rockapps.mfuentes.workingcalendar.WizardActivity;
 
-import net.danlew.android.joda.DateUtils;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
 import org.joda.time.Days;
 
 import java.text.ParseException;
@@ -40,9 +40,8 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
     private static final String tag = "SimpleCalendarViewActivity";
-
     private Button currentMonth;
     private ImageView prevMonth;
     private ImageView nextMonth;
@@ -62,7 +61,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private int restDays;
     private int current_month;
     private String username;
-    /** Called when the activity is first created. */
+
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         Log.d(tag, "Calendar Instance:= " + "Month: " + month + " " + "Year: " + year);
         Boolean first_time = getIntent().getBooleanExtra("FIRST_TIME",false);
         TextView welcomeTextView= (TextView) findViewById(R.id.welcome_text);
-        String welcomeText = (first_time) ? "Te presento, tu calendario:" : "Hola " + username + "!";
+        String welcomeText = (first_time) ? "Bienvenido!" : "Hola " + username + "!";
         welcomeTextView.setText(welcomeText);
         prevMonth = (ImageView) this.findViewById(R.id.prevMonth);
         prevMonth.setOnClickListener(this);
@@ -101,11 +101,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         currentMonth.setText(adapter.getMonthAsString(month) + " " + _calendar.get(Calendar.YEAR));
     }
 
-    /**
-     *
-     * @param month
-     * @param year
-     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(getApplicationContext(), StartupWizardActivity.class);
+                intent.putExtra("RECONFIGURE", true);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
     private void setGridCellAdapterToDate(int month, int year)
     {
         adapter = new GridCellAdapter(getApplicationContext(), R.id.calendar_day_gridcell, month, year);
@@ -180,8 +197,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         private final String[] weekdays = new String[]{"Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"};
         private final String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
         private final int[] daysOfMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        private final int month, year;
-        private int daysInMonth, prevMonthDays;
+        private int daysInMonth;
         private int currentDayOfMonth;
         private int currentWeekDay;
         private Button gridcell;
@@ -195,8 +211,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             super();
             this._context = context;
             this.list = new ArrayList<String>();
-            this.month = month;
-            this.year = year;
 
             Log.d(tag, "==> Passed in Date FOR Month: " + month + " " + "Year: " + year);
             Calendar calendar = Calendar.getInstance();
@@ -219,7 +233,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         private String getWeekDayAsString(int i)
         {
-            return weekdays[i-1];
+            return weekdays[i];
         }
 
         private int getNumberOfDaysOfMonth(int i)
@@ -238,12 +252,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             return list.size();
         }
 
-        /**
-         * Prints Month
-         *
-         * @param mm
-         * @param yy
-         */
+
         private void printMonth(int mm, int yy)
         {
             Log.d(tag, "==> printMonth: mm: " + mm + " " + "yy: " + yy);
@@ -264,7 +273,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             Log.d(tag, "Current Month: " + " " + currentMonthName + " having " + daysInMonth + " days.");
 
             // Gregorian Calendar : MINUS 1, set to FIRST OF MONTH
-            GregorianCalendar cal = new GregorianCalendar(yy, currentMonth, 1);
+            GregorianCalendar cal = new GregorianCalendar(yy, currentMonth - 1, 1);
             Log.d(tag, "Gregorian Calendar:= " + cal.getTime().toString());
 
             if (currentMonth == 12)
@@ -298,14 +307,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             // Compute how much to leave before before the first day of the
             // month.
             // getDay() returns 0 for Sunday.
-            int currentWeekDay = cal.get(Calendar.DAY_OF_WEEK)+2;
-            trailingSpaces = (currentWeekDay < 7) ? currentWeekDay : currentWeekDay - 6;
-            currentWeekDay = trailingSpaces;
+            trailingSpaces = cal.get(Calendar.DAY_OF_WEEK) - 2;
+            if (trailingSpaces < 0){
+                trailingSpaces += 7;
+            }
+            int currentWeekDay = trailingSpaces;
             Log.d(tag, "Week Day:" + currentWeekDay + " is " + getWeekDayAsString(currentWeekDay));
             Log.d(tag, "No. Trailing space to Add: " + trailingSpaces);
             Log.d(tag, "No. of Days in Previous Month: " + daysInPrevMonth);
 
-            if (cal.isLeapYear(cal.get(Calendar.YEAR)) && mm == 1)
+            if (cal.isLeapYear(cal.get(Calendar.YEAR)) && mm == 2)
             {
                 ++daysInMonth;
             }
@@ -354,32 +365,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         }
 
-        /**
-         * NOTE: YOU NEED TO IMPLEMENT THIS PART Given the YEAR, MONTH, retrieve
-         * ALL entries from a SQLite database for that month. Iterate over the
-         * List of All entries, and get the dateCreated, which is converted into
-         * day.
-         *
-         * @param year
-         * @param month
-         * @return
-         */
+
         private HashMap findNumberOfEventsPerMonth(int year, int month)
         {
             HashMap map = new HashMap<String, Integer>();
-            // DateFormat dateFormatter2 = new DateFormat();
-            //
-            // String day = dateFormatter2.format("dd", dateCreated).toString();
-            //
-            // if (map.containsKey(day))
-            // {
-            // Integer val = (Integer) map.get(day) + 1;
-            // map.put(day, val);
-            // }
-            // else
-            // {
-            // map.put(day, 1);
-            // }
             return map;
         }
 
@@ -431,7 +420,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
             if (day_color[1].equals("RED"))
             {
-                gridcell.setTextColor(Color.rgb(244,60,90));
+                gridcell.setTextColor(Color.rgb(244,10,90));
             }
             if (day_color[1].equals("YELLOW"))
             {
@@ -447,7 +436,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
             if (day_color[1].equals("BLUE"))
             {
-                gridcell.setTextColor(Color.rgb(90,90,220));
+                gridcell.setTextColor(Color.rgb(25,41,103));
             }
             return row;
         }
